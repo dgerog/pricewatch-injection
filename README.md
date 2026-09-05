@@ -22,6 +22,10 @@ that don't depend on the model choosing to behave.
 If you're following along with the webinar, jump to **[Quickstart](#quickstart--run-it-yourself)** and run
 the live demo; then come back and read the rest.
 
+> **📚 Prefer a guided path?** This repo is a complete self-paced **course**. Start with
+> **[`COURSE.md`](COURSE.md)** (the learning path) and **[`LAB.md`](LAB.md)** (the hands-on lab with
+> self-checks). It ends by turning the lesson into *automated* testing you can run on your own agents.
+
 ---
 
 ## Contents
