@@ -2,45 +2,20 @@
 
 ## ⚠️ Read this first: the vulnerability is intentional
 
-PriceWatch is a **deliberately-vulnerable teaching lab**. The prompt-injection
-weakness — a hidden instruction on a competitor web page that makes the agent
-leak a company secret — **is the point of the project, not a bug**. Please do
-**not** file a security report about the agent leaking the secret, the value-DLP
-being bypassed by the digit encoding, the missing egress firewall, or any part
-of the documented attack. Those behaviors are by design and are described in
-[`benchmark/report.md`](benchmark/report.md).
+PriceWatch is a deliberately-vulnerable teaching lab, and its prompt-injection weakness is the whole point of the project rather than a bug. In the intended scenario, a hidden instruction on a competitor web page causes the agent to leak a company secret. Please do not file a security report about the agent leaking that secret, about the value-DLP being bypassed by the digit encoding, about the missing egress firewall, or about any other part of the documented attack, because all of these behaviors are by design and are described in [`benchmark/report.md`](benchmark/report.md).
 
-Run PriceWatch **only against the bundled local target**, on a machine you
-control. Do not point it at systems or accounts you do not own.
+You should also run PriceWatch only against the bundled local target, on a machine that you control, and never point it at systems or accounts you do not own.
 
 ## What we *do* want reported privately
 
-Report privately (not via public issues) if you find something outside the
-intended teaching scope, for example:
-
-- a way the harness could harm the host it runs on (e.g. writing outside its
-  own directory, arbitrary code execution beyond the intended agent tools);
-- credentials, keys, or private data accidentally committed to the repository;
-- a supply-chain or dependency issue in the tooling itself;
-- anything that could cause real-world harm if a learner ran the lab as
-  documented.
+If you find something that falls outside this intended teaching scope, please report it privately rather than through public issues. Examples include a way the harness could harm the host it runs on, such as writing outside its own directory or achieving arbitrary code execution beyond the intended agent tools; credentials, keys, or private data that were accidentally committed to the repository; a supply-chain or dependency issue in the tooling itself; and anything else that could cause real-world harm if a learner ran the lab as documented.
 
 ## How to report
 
-**Do not open a public GitHub issue for the above.** Instead:
+Please do not open a public GitHub issue for any of the above. Instead, you can either email `security@humanbound.ai`, or use GitHub Security Advisories by clicking the "Report a vulnerability" button on the repository's Security tab.
 
-1. **Email** `security@humanbound.ai`, or
-2. Use **GitHub Security Advisories** — the *"Report a vulnerability"* button on
-   the repository's **Security** tab.
-
-Please include: the affected commit or version, a clear description and impact,
-and steps to reproduce (or a proof of concept).
+In your report, please include the affected commit or version, a clear description of the issue and its impact, and steps to reproduce it or a proof of concept.
 
 ## Our commitment
 
-- We acknowledge reports within **72 hours**.
-- We aim to complete initial triage within **7 days**.
-- We coordinate a fix and disclosure as promptly as is practical.
-
-Third-party dependency vulnerabilities should also be reported upstream to the
-respective projects.
+We will acknowledge your report within 72 hours and aim to complete initial triage within 7 days, after which we will coordinate a fix and disclosure as promptly as is practical. Third-party dependency vulnerabilities should also be reported upstream to the respective projects.
