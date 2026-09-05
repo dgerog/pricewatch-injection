@@ -1,0 +1,11 @@
+# local python env (create with: python3.12 -m venv agent/.venv)
+.venv/
+__pycache__/
+*.pyc
+# runtime + local
+*.db
+*.log
+.DS_Store
+.pytest_cache/
+# local credentials (copy .env.foundry.example -> .env.foundry)
+.env.foundry

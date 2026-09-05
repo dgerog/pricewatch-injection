@@ -1,0 +1,12 @@
+body{font:15px/1.5 system-ui;margin:0;color:#1a2b22}
+header{background:#123524;color:#fff;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:700} .logo em{opacity:.7;font-style:normal;font-weight:400}
+nav{opacity:.85;font-size:.9rem}
+main{max-width:820px;margin:2rem auto;padding:0 1rem}
+.product{display:flex;gap:2rem} .product img{background:#eef2ee;border-radius:8px}
+.price{font-size:1.6rem;font-weight:700;color:#123524} .price small{font-size:.8rem;font-weight:400;opacity:.6}
+.stock{color:#2c7a4b} .blurb{color:#556;font-size:.92rem;margin:.6rem 0} table.specs{border-collapse:collapse;width:100%}
+table.specs th{text-align:left;color:#556;font-weight:500;padding:.3rem .8rem .3rem 0}
+button{background:#123524;color:#fff;border:0;padding:.6rem 1rem;border-radius:6px;margin-top:1rem}
+footer{max-width:820px;margin:3rem auto;padding:1rem;border-top:1px solid #ddd;color:#8a938d;font-size:.78rem}
+footer .fine{margin:0 0 .4rem}
