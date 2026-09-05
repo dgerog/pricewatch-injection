@@ -10,27 +10,12 @@ whole point is to *feel* the attack and the (partial) defenses with your own han
 
 ---
 
-## Setup (once)
+## Before you start
 
-```bash
-python3.12 -m venv agent/.venv
-agent/.venv/bin/pip install -r agent/requirements.txt -r storefront/requirements.txt
-export OPENAI_API_KEY="sk-..."
-```
-
-Start the two servers, each in its own terminal, and leave them running:
-
-```bash
-# Terminal 1 — the competitor storefront + attacker collector
-cd storefront && ../agent/.venv/bin/python -m uvicorn app:app --port 8001
-```
-
-```bash
-# Terminal 2 — the agent UI (embeds the storefront)
-cd agent && OPENAI_API_KEY=$OPENAI_API_KEY .venv/bin/python -m uvicorn app:app --port 8000
-```
-
-Open **http://localhost:8000**.
+Get the demo running once, following the **[Quickstart in the README](../README.md#quickstart--run-it-yourself)**
+— create the venv, install deps, set your key, and start the two servers (storefront on `:8001`, agent UI
+on `:8000`). Run all commands **from the repository root**. Then open **http://localhost:8000** and come
+back here. Stuck on setup? See [`FAQ.md`](FAQ.md).
 
 ---
 

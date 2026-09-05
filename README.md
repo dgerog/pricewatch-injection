@@ -22,9 +22,10 @@ that don't depend on the model choosing to behave.
 If you're following along with the webinar, jump to **[Quickstart](#quickstart--run-it-yourself)** and run
 the live demo; then come back and read the rest.
 
-> **📚 Prefer a guided path?** This repo is a complete self-paced **course**. Start with
-> **[`COURSE.md`](COURSE.md)** (the learning path) and **[`LAB.md`](LAB.md)** (the hands-on lab with
-> self-checks). It ends by turning the lesson into *automated* testing you can run on your own agents.
+> **📚 New here? Take the course.** This repo doubles as a self-paced course in the **[`learn/`](learn/)**
+> folder: **[`learn/COURSE.md`](learn/COURSE.md)** (the path) · **[`learn/LAB.md`](learn/LAB.md)** (the
+> hands-on lab with self-checks) · **[`learn/FAQ.md`](learn/FAQ.md)** (troubleshooting + topic Q&A). It ends
+> by turning the lesson into *automated* testing you can run on your own agents.
 
 ---
 
@@ -154,19 +155,12 @@ the attacker's collector. **What to look at:** the verdict panel reports two thi
 
 ## 4. Experiments to try
 
-This is where the learning happens. Change one thing at a time and watch the two verdicts move.
+The whole point is to change one thing at a time — guardrail, value-DLP, model — and watch the two verdicts
+move, until you can see for yourself that you can't make the agent *both* safe and useful by editing its
+instructions. The full guided version — *Do → Observe → Why*, with self-checks and a capstone that tests
+your **own** agent — is the lab:
 
-| Try this (in the UI) | What to observe | The lesson |
-|---|---|---|
-| Set **guardrail = none**, press Ask a few times | On capable models the secret leaks most/every time | Undefended, the agent just does what the page says |
-| Switch **guardrail = basic (junior)** | It *sometimes* helps, inconsistently | A "keep these numbers secret" note is a coin-flip — it forbids "cost", but the attack never says "cost" |
-| Switch **guardrail = hardened (expert)** | On most models the leak stops — but the advice degrades to a guess | The injection-aware prompt defends the *channel*, not the *word* — but there's **no clean win** |
-| Switch **model** to `Mistral-Large-3` with **hardened** on | It *still leaks* | Even the best prompt is **model-dependent** — it fails outright on at least one frontier model |
-| Toggle **value-DLP = on** | The encoded secret still gets out | A filter that matches the literal number is beaten by the `1x1x8.4` disguise |
-| Edit `storefront/templates.py` (the attack string) and reload | The attack changes everywhere | There is a **single attack-definition point**; the benchmark regenerates around it |
-
-The point of the exercise: you can't make the agent *both* safe and useful by editing its instructions, and
-no single filter closes the gap. That's the case for defense-in-depth.
+**→ [`learn/LAB.md`](learn/LAB.md)** (Part 3), or start the whole path at **[`learn/COURSE.md`](learn/COURSE.md)**.
 
 ---
 

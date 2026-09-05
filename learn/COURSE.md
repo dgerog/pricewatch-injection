@@ -37,9 +37,9 @@ Everything you need is in this repo (plus the video):
 | 📺 **Video (20 min)** | the orientation: see the attack, get the one lesson | *(webinar recording — link in the repo release / description)* |
 | 🗺️ **`COURSE.md`** | this file — the learning path | you're reading it |
 | 🧪 **`LAB.md`** | the guided, hands-on lab with self-checks | [`LAB.md`](LAB.md) |
-| 📊 **`benchmark/report.md`** | the full study: 9 models, 5 vendors, the data behind every claim | [`benchmark/report.md`](benchmark/report.md) |
+| 📊 **`benchmark/report.md`** | the full study: 9 models, 5 vendors, the data behind every claim | [`benchmark/report.md`](../benchmark/report.md) |
 | 🛠️ **the code** | a full, end-to-end vulnerable agent + attacker storefront + benchmark | `agent/` · `storefront/` · `benchmark/` |
-| 📎 **`README.md`** | the plain-English overview and quickstart | [`README.md`](README.md) |
+| 📎 **`README.md`** | the plain-English overview and quickstart | [`README.md`](../README.md) |
 
 > The code is deliberately a **complete, working rogue-agent scenario** — not a toy snippet — so you can
 > see exactly how the attack is executed *and* how the mitigations are (and aren't) effective.
@@ -108,7 +108,7 @@ have a repeatable way to **catch it in your own agents, continuously.**
 ## Where to go next
 
 - Do the **Capstone** in [`LAB.md`](LAB.md) against a real agent and install **`hb`** to automate it.
-- Contribute back: run a model we haven't tested and PR the numbers (see [`CONTRIBUTING.md`](CONTRIBUTING.md)) —
+- Contribute back: run a model we haven't tested and PR the numbers (see [`CONTRIBUTING.md`](../CONTRIBUTING.md)) —
   the report is a living, community leaderboard.
 - Read the real-world incidents in `benchmark/report.md` §9 (EchoLeak, CamoLeak) to see this in shipped
   products.
