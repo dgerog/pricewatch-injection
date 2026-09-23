@@ -22,6 +22,16 @@ controls that don't depend on the model choosing to behave.
 If you're following along with the webinar, jump to **[Quickstart](#quickstart--run-it-yourself)** to run
 the live demo, then come back and read the rest.
 
+## ▶ Watch the walkthrough (2 min)
+
+A narrated tour of the attack, recorded from this repo's live demo UI: the agent reads our secret
+record, is lured across the trust boundary onto the attacker's page, and leaks our unit cost — all
+while handing the merchandiser a normal-looking recommendation.
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=MjfHRcoST8s"><img src="https://img.youtube.com/vi/MjfHRcoST8s/hqdefault.jpg" alt="PriceWatch — attack walkthrough (click to watch on YouTube)" width="640"></a>
+</div>
+
 > **📚 New here? Take the course.** This repo doubles as a self-paced course in the **[`learn/`](learn/)**
 > folder: **[`learn/COURSE.md`](learn/COURSE.md)** (the path) · **[`learn/LAB.md`](learn/LAB.md)** (the
 > hands-on lab with self-checks) · **[`learn/FAQ.md`](learn/FAQ.md)** (troubleshooting + topic Q&A). It ends
