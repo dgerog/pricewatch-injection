@@ -2,7 +2,7 @@
 
 ## ⚠️ Read this first: the vulnerability is intentional
 
-PriceWatch is a deliberately-vulnerable teaching lab, and its prompt-injection weakness is the whole point of the project rather than a bug. In the intended scenario, a hidden instruction on a competitor web page causes the agent to leak a company secret. Please do not file a security report about the agent leaking that secret, about the value-DLP being bypassed by the digit encoding, about the missing egress firewall, or about any other part of the documented attack, because all of these behaviors are by design and are described in [`benchmark/report.md`](benchmark/report.md).
+PriceWatch is a deliberately-vulnerable teaching lab, and its prompt-injection weakness is the whole point of the project rather than a bug. In the intended scenario, a hidden instruction on a competitor web page causes the agent to leak a company secret. Please do not file a security report about the agent leaking that secret, about the value-DLP being bypassed by the digit encoding, about the missing egress firewall, or about any other part of the documented attack, because all of these behaviors are by design and are described in [`benchmark/models/report.md`](benchmark/models/report.md).
 
 You should also run PriceWatch only against the bundled local target, on a machine that you control, and never point it at systems or accounts you do not own.
 

@@ -13,7 +13,7 @@ PriceWatch has three clean extension seams, and each one is an open invitation:
 1. **Add a model → PR your numbers.** `agent_core.get_llm()` dispatches on a
    `provider:` prefix, so the whole benchmark is provider-agnostic. Run a model
    we haven't tested yet, regenerate the report, and open a PR with the results.
-   The findings in [`benchmark/report.md`](benchmark/report.md) are meant to
+   The findings in [`benchmark/models/report.md`](benchmark/models/report.md) are meant to
    grow into a living, community leaderboard of which models resist the attack,
    so please share the numbers rather than your API keys.
 
@@ -72,7 +72,7 @@ Run the demo and the benchmark as described in the [README](README.md). The
 report regenerates for free from the saved results:
 
 ```bash
-cd benchmark && ../agent/.venv/bin/python run_benchmark.py --report-only
+cd benchmark/models && ../../agent/.venv/bin/python run_benchmark.py --report-only
 ```
 
 ## Pull-request workflow

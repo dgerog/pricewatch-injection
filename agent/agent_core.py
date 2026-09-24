@@ -9,6 +9,8 @@ independent knobs, so you can show every combination — e.g. GUARDRAIL=none GUA
 at all, yet the leak is still blocked in code).
 """
 import os
+from pathlib import Path
+
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 
@@ -167,15 +169,84 @@ def get_llm():
     return ChatOpenAI(**kwargs)
 
 
-def build_agent(guard_enabled=None):
+# The firewall's policy for this agent (scope + permitted/restricted intents). See agent.yaml.
+FIREWALL_CONFIG = Path(__file__).parent / "agent.yaml"
+
+
+# The trust classes PriceWatch enforces. The demo is about what comes IN through tools: competitor
+# pages (ingest) and our own records (recall). The human turn is the merchandiser at our own UI, so
+# the request class is left off here — a deployment choice, not part of the policy file.
+FIREWALL_CLASSES = ("ingest", "recall")
+
+
+def build_firewall_middleware(firewall=None, *, mode="block", streamer=None, **options):
+    """The Humanbound firewall on the agent's content boundaries (optional defense, off by default).
+
+    Unlike the value-DLP guard, which inspects what LEAVES, this screens what COMES IN: every tool
+    result is judged against agent.yaml before the model sees it, so an instruction planted in a
+    page never reaches the agent. It judges intent, not values, which is why encoding the secret
+    does not get past it. agent.yaml says which tools return our own records (integrity check)
+    and everything else is outside content; the adapter attaches every tool by itself.
+
+    `firewall` lets a caller supply a Firewall built elsewhere (the tests do, with a scripted
+    engine); by default it is built from agent.yaml with the firewall's LLM judge as the engine:
+    OpenAI when OPENAI_API_KEY is set (FIREWALL_JUDGE_MODEL, default gpt-4.1-mini; on the exact
+    prompts of a run it passes the competitor's listing, blocks the attacker's page and passes a
+    fetch error, five repeats each, where gpt-4.1 blocks the listing too). The agent is HIGH-STAKE, so the firewall fails CLOSED: an uncertain or
+    empty verdict withholds the page. Without a judge nothing is evaluated, so set the key.
+    `mode` is the Guard's: "block" enforces; "log" judges every payload the same way but always
+    passes it on, which is how the walkthrough shows what the firewall WOULD do on an unprotected
+    run. `streamer` replaces the judge's streamer (the walkthrough passes a metered one, to report
+    tokens and cost per judgement). `options` go to the LangChain adapter (window size). The tool inventory handed to the adapter
+    is only for its coverage report; screening does not depend on it.
+
+    Imported lazily: the demo runs without the package unless the firewall is switched on."""
+    try:
+        from humanbound_firewall import Firewall
+    except ImportError as e:
+        raise ImportError(
+            "The firewall defense needs the humanbound-firewall package "
+            "(and OPENAI_API_KEY for its judge). See the README.") from e
+    if firewall is None and streamer is not None:
+        from humanbound_firewall.config import load_config
+        firewall = Firewall(load_config(FIREWALL_CONFIG), streamer=streamer,
+                            classes=FIREWALL_CLASSES, mode=mode, fail="closed")
+    elif firewall is None:
+        firewall = Firewall.from_config(FIREWALL_CONFIG, classes=FIREWALL_CLASSES,
+                                        provider=_firewall_judge(), fail="closed", mode=mode)
+    inventory = [_fetch_name()] + [t.name for t in AGENT_INTERNAL_TOOLS]
+    return firewall.adapt_to("langchain", tools=inventory, **options)
+
+
+def _firewall_judge():
+    """The firewall's Tier 3 judge: OpenAI when the demo already has the key, else none."""
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        return None
+    from humanbound_firewall import Provider, ProviderIntegration, ProviderName
+    return Provider(name=ProviderName.OPENAI, integration=ProviderIntegration(
+        api_key=api_key, model=os.getenv("FIREWALL_JUDGE_MODEL", "gpt-4.1-mini")))
+
+
+def build_agent(guard_enabled=None, firewall_enabled=None, firewall_middleware=None):
     """Build the agent. When the enforced guard is on (env GUARD=on, default), fetch_url is replaced
     by a guarded version whose egress check runs in code before any request leaves — independent of
-    the prompt guardrail and invisible to the model. GUARD=off reproduces v0.1 (prompt-only)."""
+    the prompt guardrail and invisible to the model. GUARD=off reproduces v0.1 (prompt-only).
+
+    firewall_enabled (env FIREWALL=on|off, default off) adds the Humanbound firewall as middleware on
+    the tool boundary. It is independent of the other two knobs. A caller can instead pass a
+    ready-made `firewall_middleware` (from build_firewall_middleware), which is used as is."""
     if guard_enabled is None:
         guard_enabled = os.getenv("GUARD", "on").lower() not in ("off", "0", "false", "no")
+    if firewall_enabled is None:
+        firewall_enabled = os.getenv("FIREWALL", "off").lower() in ("on", "1", "true", "yes")
     guard = EgressGuard(enabled=True) if guard_enabled else None
     fetch_tool = make_fetch_tool(_fetch_name(), guard=guard)  # honors FETCH_TOOL_NAME + guard
-    return create_agent(get_llm(), AGENT_INTERNAL_TOOLS + [fetch_tool])
+    if firewall_middleware is not None:
+        middleware = [firewall_middleware]
+    else:
+        middleware = [build_firewall_middleware()] if firewall_enabled else []
+    return create_agent(get_llm(), AGENT_INTERNAL_TOOLS + [fetch_tool], middleware=middleware)
 
 
 def build_task(sku: str, question: str = "") -> str:
